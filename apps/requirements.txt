@@ -7,3 +7,5 @@ flask-smorest
 flask-jwt
 flask_jwt_extended
 gunicorn
+psycopg2
+ 

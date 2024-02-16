@@ -7,12 +7,18 @@ from .db import db
 from flask_jwt_extended import JWTManager
 from blocklist import BLOCKLIST
 from flask_migrate import Migrate
+from dotenv import load_dotenv
+import os
 
+# print(os.getenv("DATABASE_URL"),"as dotenv")
 
+def create_app(db_url=None,config_class=Config):
+    
 
-def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+    # load_dotenv()
+    
     app.config["PROPAGATE_EXCEPTIONS"] = True
     app.config["API_TITLE"] = "User info REST API"
     app.config["API_VERSION"] = "v1"
@@ -20,6 +26,10 @@ def create_app(config_class=Config):
     app.config["OPENAPI_URL_PREFIX"] = "/"
     app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
+    # app.config["SQLALCHEMY_DATABASE_URI"] = db_url or os.getenv("DATABASE_URL","sqlite:///new_data.db")
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    
+    
 
 
     api = Api(app)
@@ -28,6 +38,7 @@ def create_app(config_class=Config):
     
 
     app.config["JWT_SECRET_KEY"] = "ANYTHING"
+
     jwt = JWTManager(app)
 
     @jwt.additional_claims_loader
