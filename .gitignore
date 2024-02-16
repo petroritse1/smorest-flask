@@ -2,3 +2,10 @@
 __pycache__
 .env
 .db
+
+.env
+.vscode
+__pycache__
+*.__pycache__
+.DS_Store
+.db
